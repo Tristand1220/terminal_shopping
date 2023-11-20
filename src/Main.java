@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -52,53 +54,75 @@ public class Main {
     //Shopping Mall
     private static void shoppingApplication(Scanner scanner) {
         boolean exit = false;
+        List<Items> shoppingCart = new ArrayList<>();
 
+        System.out.println("\n===== Shopping Application =====");
+        System.out.println("1. View Products");
+        System.out.println("2. Add to Cart");
+        System.out.println("3. View Cart");
+        System.out.println("4. Checkout");
+        System.out.println("5. Wishlist");
+        System.out.println("6. Message Staff");
+        System.out.println("7. Exit");
+
+        System.out.print("Enter your choice: ");
+        int choice = scanner.nextInt();
+        scanner.nextLine();
         while (!exit) {
-            System.out.println("\n===== Shopping Application =====");
-            System.out.println("1. View Products");
-            System.out.println("2. Add to Cart");
-            System.out.println("3. View Cart");
-            System.out.println("4. Checkout");
-            System.out.println("5. Wishlist");
-            System.out.println("6. Message Staff");
-            System.out.println("7. Exit");
-
-            System.out.print("Enter your choice: ");
-            int choice = scanner.nextInt();
-            scanner.nextLine();
-
             switch (choice) {
                 case 1:
-                    System.out.println("Displaying available products...");
+                    System.out.println("\nDisplaying available products...");
+                    Items shirt = new Items(5, true, 50.00, "shirt");
+                    Items pants = new Items(5, true, 50.00, "pants");
+                    Items shoes = new Items(5, true, 50.00, "shoes");
+                    Items hat = new Items(5, true, 50.00, "hat");
+                    Items jacket = new Items(5, true, 50.00, "jacket");
 
+                    shirt.printItemDetails();
+                    pants.printItemDetails();
+                    shoes.printItemDetails();
+                    hat.printItemDetails();
+                    jacket.printItemDetails();
                     break;
                 case 2:
-                    System.out.println("Adding product to cart...");
-                    // Implement code to add product to the cart
+                    System.out.println("\nAdding product to cart...");
+                    String itemname;
+                    int quantity;
+
+                    System.out.println("Select item you wish to add to your shopping cart: ");
+                    itemname= scanner.nextLine();
+                    System.out.println("Select quantity: ");
+                    quantity= scanner.nextInt();
+
+                    boolean addedToCart = myItem.addToCart(shoppingCart, "Example Item", 2);
+
+
+
                     break;
                 case 3:
-                    System.out.println("Viewing shopping cart...");
+                    System.out.println("\nViewing shopping cart...");
                     // Implement code to view the shopping cart
                     break;
                 case 4:
-                    System.out.println("Checking out...");
+                    System.out.println("\nChecking out...");
                     // Implement code for checkout process
                     break;
                 case 5:
-                    System.out.println("Wishlist...");
+                    System.out.println("\nWishlist...");
                     // Implement code for checkout process
                     break;
                 case 6:
-                    System.out.println("Message staff...");
+                    System.out.println("\nMessage staff...");
                     // Implement code for checkout process
                     break;
                 case 7:
-                    System.out.println("Exiting shopping application. Goodbye!");
+                    System.out.println("\nExiting shopping application. Goodbye!");
                     exit = true;
                     break;
                 default:
-                    System.out.println("Invalid choice. Please try again.");
+                    System.out.println("\nInvalid choice. Please try again.");
             }
+
         }
     }
 
@@ -107,47 +131,46 @@ public class Main {
     private static void staffInterface(Scanner scanner) {
         boolean exit = false;
 
-        while (!exit) {
-            System.out.println("\n===== Staff Interface =====");
-            System.out.println("1. Refill Inventory");
-            System.out.println("2. Upload Items");
-            System.out.println("3. Remove Items");
-            System.out.println("4. Modify Item Info");
-            System.out.println("5. Message Customer");
-            System.out.println("6. Logout");
 
-            System.out.print("Enter your choice: ");
-            int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume the newline character
+        System.out.println("\n===== Staff Interface =====");
+        System.out.println("1. Refill Inventory");
+        System.out.println("2. Upload Items");
+        System.out.println("3. Remove Items");
+        System.out.println("4. Modify Item Info");
+        System.out.println("5. Message Customer");
+        System.out.println("6. Logout");
 
-            switch (choice) {
-                case 1:
-                    System.out.println("Refilling inventory...");
-                    // Implement code for refilling inventory
-                    break;
-                case 2:
-                    System.out.println("Uploading items...");
-                    // Implement code for uploading/removing items
-                    break;
-                case 3:
-                    System.out.println("Removing items...");
-                    // Implement code for writing/modifying item information
-                    break;
-                case 4:
-                    System.out.println("Modify Item information...");
-                    // Implement code for accessing customer information
-                    break;
-                case 5:
-                    System.out.println("Message customer...");
-                    // Implement code for accessing customer information
-                    break;
-                case 6:
-                    System.out.println("Logging out. Goodbye!");
-                    exit = true;
-                    break;
-                default:
-                    System.out.println("Invalid choice. Please try again.");
-            }
+        System.out.print("Enter your choice: ");
+        int choice = scanner.nextInt();
+        scanner.nextLine(); // Consume the newline character
+
+        switch (choice) {
+            case 1:
+                System.out.println("Refilling inventory...");
+                // Implement code for refilling inventory
+                break;
+            case 2:
+                System.out.println("Uploading items...");
+                // Implement code for uploading/removing items
+                break;
+            case 3:
+                System.out.println("Removing items...");
+                // Implement code for writing/modifying item information
+                break;
+            case 4:
+                System.out.println("Modify Item information...");
+                // Implement code for accessing customer information
+                break;
+            case 5:
+                System.out.println("Message customer...");
+                // Implement code for accessing customer information
+                break;
+            case 6:
+                System.out.println("Logging out. Goodbye!");
+                exit = true;
+                break;
+            default:
+                System.out.println("Invalid choice. Please try again.");
         }
     }
 
