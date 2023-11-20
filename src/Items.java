@@ -63,9 +63,20 @@ public class Items {
     public void removeFromCart(List<Items> cart) {
         cart.remove(this);
     }
+
     //Method to Like the Item
     /*public void likeitem(List<Items> cart) {
-        cart.like(this);
+        cart.likeitem(this);
     }*/
-}
 
+    public void printItemDetails() {
+        System.out.println("Item: " + itemname + " Price: " + price);
+    }
+
+    public void Isinstock (int quantity){
+        this.quantity = quantity;
+        if (quantity==0){
+            setInStock(false);
+        }
+    }
+}
