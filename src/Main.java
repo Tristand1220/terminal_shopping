@@ -1,7 +1,5 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+
 
 public class Main {
     public static void main(String[] args) {
@@ -54,68 +52,144 @@ public class Main {
     //Shopping Mall
     private static void shoppingApplication(Scanner scanner) {
         boolean exit = false;
-        List<Items> shoppingCart = new ArrayList<>();
+        List<Item> shoppingCart = new ArrayList<>();
+        List<Item> wishlist = new ArrayList<>();
 
-        System.out.println("\n===== Shopping Application =====");
-        System.out.println("1. View Products");
-        System.out.println("2. Add to Cart");
-        System.out.println("3. View Cart");
-        System.out.println("4. Checkout");
-        System.out.println("5. Wishlist");
-        System.out.println("6. Message Staff");
-        System.out.println("7. Exit");
+        Item shirt = new Item(5, true, 50.00, "shirt");
+        Item pants = new Item(5, true, 50.00, "pants");
+        Item shoes = new Item(5, true, 50.00, "shoes");
+        Item hat = new Item(5, true, 50.00, "hat");
+        Item jacket = new Item(5, true, 50.00, "jacket");
 
-        System.out.print("Enter your choice: ");
-        int choice = scanner.nextInt();
-        scanner.nextLine();
+        Set<String> ItemNameString = new HashSet<String>();
+        ItemNameString.add("shirt");
+        ItemNameString.add("pants");
+        ItemNameString.add("shoes");
+        ItemNameString.add("hat");
+        ItemNameString.add("jacket");
+
         while (!exit) {
+            System.out.println("\n===== Shopping Application =====");
+            System.out.println("1. View Products");
+            System.out.println("2. Add to Cart");
+            System.out.println("3. View Cart");
+            System.out.println("4. Checkout");
+            System.out.println("5. Add to Wishlist");
+            System.out.println("6. View Wishlist");
+            System.out.println("7. Remove item");
+            System.out.println("8. Message Staff");
+            System.out.println("9. Exit");
+
+            System.out.print("Enter your choice: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+
             switch (choice) {
                 case 1:
                     System.out.println("\nDisplaying available products...");
-                    Items shirt = new Items(5, true, 50.00, "shirt");
-                    Items pants = new Items(5, true, 50.00, "pants");
-                    Items shoes = new Items(5, true, 50.00, "shoes");
-                    Items hat = new Items(5, true, 50.00, "hat");
-                    Items jacket = new Items(5, true, 50.00, "jacket");
-
                     shirt.printItemDetails();
                     pants.printItemDetails();
                     shoes.printItemDetails();
                     hat.printItemDetails();
                     jacket.printItemDetails();
                     break;
+
                 case 2:
                     System.out.println("\nAdding product to cart...");
                     String itemname;
                     int quantity;
 
+
                     System.out.println("Select item you wish to add to your shopping cart: ");
-                    itemname= scanner.nextLine();
-                    System.out.println("Select quantity: ");
-                    quantity= scanner.nextInt();
+                    itemname = scanner.nextLine();
+                    if (ItemNameString.contains(itemname)){
+                        System.out.println("Select quantity: ");
+                        quantity = scanner.nextInt();
 
-                    boolean addedToCart = myItem.addToCart(shoppingCart, "Example Item", 2);
-
-
-
+                        Item addedItem = new Item(quantity, true, 50.00, itemname);
+                        boolean addedToCart = addedItem.addToCart(shoppingCart, itemname, quantity);
+                        if (!addedToCart) {
+                            System.out.println("Item not added to the cart. Check item name or quantity available.");
+                        } else {
+                            System.out.println("Item added to the cart successfully!");
+                        }
+                    } else {
+                        System.out.print("Item selected does not exist in shopping mall");
+                    }
                     break;
+
                 case 3:
                     System.out.println("\nViewing shopping cart...");
-                    // Implement code to view the shopping cart
+                    Item.displayShoppingCart(shoppingCart);
                     break;
                 case 4:
                     System.out.println("\nChecking out...");
                     // Implement code for checkout process
                     break;
                 case 5:
-                    System.out.println("\nWishlist...");
-                    // Implement code for checkout process
+                    System.out.println("\nAdding to Wishlist...");
+
+
+                    System.out.println("Select item you wish to add to your shopping cart: ");
+                    itemname = scanner.nextLine();
+                    if (ItemNameString.contains(itemname)){
+                        System.out.println("Select quantity: ");
+                        quantity = scanner.nextInt();
+
+                        Item addedItem = new Item(quantity, true, 50.00, itemname);
+                        boolean addedToCart = addedItem.addToCart(wishlist, itemname, quantity);
+                        if (!addedToCart) {
+                            System.out.println("Item not added wishlist. Check item name or quantity available.");
+                        } else {
+                            System.out.println("Item added to the wishlist successfully!");
+                        }
+                    } else {
+                        System.out.print("Item selected does not exist in shopping mall");
+                    }
                     break;
                 case 6:
+                    System.out.println("\nViewing wishlist...");
+                    Item.displaywishlist(wishlist);
+                    break;
+                case 7:
+                    System.out.println("\nRemove item");
+
+
+                    System.out.print("Enter the name of the item to remove: ");
+                    String itemToRemove = scanner.nextLine();
+
+                    if (ItemNameString.contains(itemToRemove)){
+                        System.out.println("Where do you want to remove this item from? (Must be \"shopping cart\" or \"wishlist\")");
+                        String whichCart=scanner.nextLine();
+
+                        if(whichCart.equals("shopping cart")){
+                            Item.removeFromCart(shoppingCart, itemToRemove);
+                        } else if (whichCart.equals("wishlist")) {
+                            Item.removeFromCart(wishlist, itemToRemove);
+                        }else{
+                            System.out.println("Location incorrect");
+                        }
+                    }else {
+                        System.out.print("Item selected does not exist in shopping mall");
+                    }
+                    break;
+                case 8:
+                    System.out.println("\nMove item to wishlist");
+                    System.out.print("Enter the name of the item to move to wishlist: ");
+                    String itemToMove = scanner.nextLine();
+
+                    boolean movedToWishlist = Item.moveToWishlist(shoppingCart, wishlist, itemToMove);
+                    if (movedToWishlist) {
+                        System.out.println("Item moved to wishlist successfully!");
+                    } else {
+                        System.out.println("Item not moved to wishlist. Check item name or quantity available in the shopping cart.");
+                    }
+                    break;
+                case 9:
                     System.out.println("\nMessage staff...");
                     // Implement code for checkout process
                     break;
-                case 7:
+                case 0:
                     System.out.println("\nExiting shopping application. Goodbye!");
                     exit = true;
                     break;
@@ -125,6 +199,7 @@ public class Main {
 
         }
     }
+
 
 
     //Staff Interface
@@ -191,11 +266,11 @@ public class Main {
             switch (choice) {
                 case 1:
                     System.out.println("Generating Daily Report...");
-                    // Implement code for generating daily report
+                    Reports.scheduleDailyReport();
                     break;
                 case 2:
                     System.out.println("Generating Monthly Report...");
-                    // Implement code for generating monthly report
+                    Reports.scheduleMonthlyReport();
                     break;
                 case 3:
                     System.out.println("Logging out. Goodbye!");
