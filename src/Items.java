@@ -1,11 +1,13 @@
+import java.util.Arrays;
 import java.util.List;
 
 public class Item {
     private int quantity;
     private boolean isInStock;
     private double price;
-
     private String itemname;
+
+    private int likes;
 
     // Constructor
     public Item(int quantity, boolean isInStock, double price, String itemname) {
@@ -121,13 +123,43 @@ public class Item {
     }
 
     // Helper method to find an item in a list by name
-    private static Item findItem(List<Item> itemList, String itemName) {
+    static Item findItem(List<Item> itemList, String itemName) {
         for (Item item : itemList) {
             if (item.getItemname().equals(itemName)) {
                 return item;
             }
         }
         return null;
+    }
+
+    public static Item findItemInShoppingMall(String itemName) {
+        List<Item> shoppingMall = Arrays.asList(
+                new Item(5, true, 50.00, "shirt"),
+                new Item(5, true, 50.00, "pants"),
+                new Item(5, true, 50.00, "shoes"),
+                new Item(5, true, 50.00, "hat"),
+                new Item(5, true, 50.00, "jacket")
+        );
+
+        for (Item item : shoppingMall) {
+            if (item.getItemname().equalsIgnoreCase(itemName)) {
+                return item;
+            }
+        }
+        return null;
+    }
+
+    public void likeItem(){
+        likes++;
+    }
+    public void unLikeItem(){
+        if (likes > 0){
+            likes--;
+        }
+    }
+
+    public int getLikes(){
+        return likes;
     }
 
 }
