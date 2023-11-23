@@ -77,8 +77,10 @@ public class Main {
             System.out.println("5. Add to Wishlist");
             System.out.println("6. View Wishlist");
             System.out.println("7. Remove item");
-            System.out.println("8. Message Staff");
-            System.out.println("9. Exit");
+            System.out.println("8. Move item to wishlist");
+            System.out.println("9. Message Staff");
+            System.out.println("10. Like/Dislike item");
+            System.out.println("0. Exit");
 
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
@@ -188,6 +190,39 @@ public class Main {
                 case 9:
                     System.out.println("\nMessage staff...");
                     // Implement code for checkout process
+                    break;
+                case 10:
+                    System.out.println("\nLike an item...");
+                    System.out.println("Select item you want to like or unlike: ");
+                    String itemNameToLike = scanner.nextLine();
+
+                    // Find the item in the shopping mall
+                    Item itemToLike = Item.findItemInShoppingMall(itemNameToLike);
+
+                    if (itemToLike != null) {
+                        System.out.println("1. Like");
+                        System.out.println("2. Unlike");
+                        System.out.print("Enter your choice: ");
+                        int likeChoice = scanner.nextInt();
+                        scanner.nextLine(); // Consume the newline character
+
+                        switch (likeChoice) {
+                            case 1:
+                                itemToLike.likeItem();
+                                System.out.println("Item liked!");
+                                break;
+                            case 2:
+                                itemToLike.unLikeItem();
+                                System.out.println("Item unliked!");
+                                break;
+                            default:
+                                System.out.println("Invalid choice. Please enter 1 to like or 2 to unlike.");
+                                break;
+                        }
+                    } else {
+                        System.out.println("Item not found in the shopping mall.");
+                    }
+
                     break;
                 case 0:
                     System.out.println("\nExiting shopping application. Goodbye!");
