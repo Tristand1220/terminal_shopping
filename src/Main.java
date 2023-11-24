@@ -12,10 +12,23 @@ public class Main {
         logininfo.put("staff","staff123");
         logininfo.put("ceo","ceo123");
 
+        boolean exitProgram = false;
 
-        loginLoop(scanner, logininfo);
+        while (!exitProgram) {
+            loginLoop(scanner, logininfo);
+
+            // After loginLoop completes, ask the user if they want to exit
+            System.out.print("\nDo you want to exit? (yes/no): ");
+            String exitChoice = scanner.next().toLowerCase();
+
+            if (exitChoice.equals("yes")) {
+                exitProgram = true;
+            }
+        }
+
         scanner.close();
     }
+
 
     private static void loginLoop(Scanner scanner, HashMap<String, String> loginInfo) {
         System.out.println("Login Screen\n");
@@ -149,7 +162,7 @@ public class Main {
                     System.out.println("\nAdding to Wishlist...");
 
 
-                    System.out.println("Select item you wish to add to your shopping cart: ");
+                    System.out.println("Select item you wish to add to your wishlist: ");
                     itemname = scanner.nextLine();
                     if (ItemNameString.contains(itemname)){
                         System.out.println("Select quantity: ");
@@ -183,8 +196,10 @@ public class Main {
 
                         if(whichCart.equals("shopping cart")){
                             Item.removeFromCart(shoppingCart, itemToRemove);
+                            System.out.println("Item removed from shopping cart");
                         } else if (whichCart.equals("wishlist")) {
                             Item.removeFromCart(wishlist, itemToRemove);
+                            System.out.println("Item removed from wishlist");
                         }else{
                             System.out.println("Location incorrect");
                         }
@@ -257,48 +272,66 @@ public class Main {
     //Staff Interface
     private static void staffInterface(Scanner scanner) {
         boolean exit = false;
+        List<Item> inventory = Staff.initializeInventory();
+
+        while(!exit){
+            System.out.println("\n===== Staff Interface =====");
+            System.out.println("1. Refill Inventory");
+            System.out.println("2. Upload Items");
+            System.out.println("3. Remove Items");
+            System.out.println("4. Modify Item Info");
+            System.out.println("5. Message Customer");
+            System.out.println("6. Logout");
+
+            System.out.print("Enter your choice: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume the newline character
 
 
-        System.out.println("\n===== Staff Interface =====");
-        System.out.println("1. Refill Inventory");
-        System.out.println("2. Upload Items");
-        System.out.println("3. Remove Items");
-        System.out.println("4. Modify Item Info");
-        System.out.println("5. Message Customer");
-        System.out.println("6. Logout");
-
-        System.out.print("Enter your choice: ");
-        int choice = scanner.nextInt();
-        scanner.nextLine(); // Consume the newline character
-
-        switch (choice) {
-            case 1:
-                System.out.println("Refilling inventory...");
-                // Implement code for refilling inventory
-                break;
-            case 2:
-                System.out.println("Uploading items...");
-                // Implement code for uploading/removing items
-                break;
-            case 3:
-                System.out.println("Removing items...");
-                // Implement code for writing/modifying item information
-                break;
-            case 4:
-                System.out.println("Modify Item information...");
-                // Implement code for accessing customer information
-                break;
-            case 5:
-                System.out.println("Message customer...");
-                // Implement code for accessing customer information
-                break;
-            case 6:
-                System.out.println("Logging out. Goodbye!");
-                exit = true;
-                break;
-            default:
-                System.out.println("Invalid choice. Please try again.");
+            switch (choice) {
+                case 1:
+                    System.out.println("Refilling inventory...");
+                    Staff.refillInventory(inventory);
+                    break;
+                case 2:
+                    System.out.println("Uploading items...");
+                    System.out.print("Enter new item name: ");
+                    String newItemName = scanner.nextLine();
+                    System.out.print("Enter new item price: ");
+                    double newItemPrice = scanner.nextDouble();
+                    Staff.addNewItem(inventory, newItemName, newItemPrice);
+                    break;
+                case 3:
+                    System.out.println("Removing items...");
+                    System.out.print("Enter the name of the item to remove: ");
+                    String itemToRemove = scanner.nextLine();
+                    Staff.removeItem(inventory, itemToRemove);
+                    break;
+                case 4:
+                    System.out.println("Modify Item information...");
+                    System.out.print("Enter the name of the item to modify: ");
+                    String itemToModify = scanner.nextLine();
+                    System.out.print("Enter the new name for the item: ");
+                    String modItemName = scanner.nextLine();
+                    System.out.print("Enter the new price for the item: ");
+                    double modItemPrice = scanner.nextDouble();
+                    System.out.print("Enter the new quantity for the item: ");
+                    int modItemQuantity = scanner.nextInt();
+                    Staff.modifyItemInfo(inventory, itemToModify, modItemName, modItemPrice, modItemQuantity);
+                    break;
+                case 5:
+                    System.out.println("Message customer...");
+                    // Implement code for accessing customer information
+                    break;
+                case 6:
+                    System.out.println("Logging out. Goodbye!");
+                    exit = true;
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
         }
+
     }
 
     //CEO Interface
