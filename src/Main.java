@@ -54,6 +54,7 @@ public class Main {
         boolean exit = false;
         List<Item> shoppingCart = new ArrayList<>();
         List<Item> wishlist = new ArrayList<>();
+        String crediCardnum = "1234567890123456";
 
         Item shirt = new Item(5, true, 50.00, "shirt");
         Item pants = new Item(5, true, 50.00, "pants");
@@ -126,7 +127,23 @@ public class Main {
                     break;
                 case 4:
                     System.out.println("\nChecking out...");
-                    // Implement code for checkout process
+                    System.out.print("Enter your 16-digit credit card number: ");
+                    String enteredCreditCard = scanner.next();
+
+                    // Check if the entered credit card number is correct
+                    if (enteredCreditCard.equals(crediCardnum)) {
+                        // Purchase items in the shopping cart
+                        boolean purchaseSuccessful = Item.purchaseItems(shoppingCart);
+
+                        if (purchaseSuccessful) {
+                            System.out.println("Purchase successful!");
+                            Item.displayReceipt(shoppingCart);
+                            // Optionally, clear the shopping cart after successful purchase
+                            shoppingCart.clear();
+                        }
+                    }else {
+                        System.out.println("Purchase canceled. Invalid card information.");
+                    }
                     break;
                 case 5:
                     System.out.println("\nAdding to Wishlist...");
