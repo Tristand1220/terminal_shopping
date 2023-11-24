@@ -162,4 +162,57 @@ public class Item {
         return likes;
     }
 
+    static boolean purchaseItems(List<Item> shoppingCart) {
+        // Check if the shopping cart is empty
+        if (shoppingCart.isEmpty()) {
+            System.out.println("Shopping cart is empty. No items to purchase.");
+            return false;
+        }
+
+        double totalPrice = 0.0;
+
+        // Display an itemized list of each item in the shopping cart
+        System.out.println("\nItemized List:");
+        for (Item item : shoppingCart) {
+            item.printItemDetailsCart();
+
+            // Calculate the total price for each item and add it to the overall total
+            double itemTotalPrice = item.getPrice() * item.getQuantity();
+            totalPrice += itemTotalPrice;
+        }
+
+        // Display the total price to the customer
+        System.out.println("\nTotal Price: $" + totalPrice);
+
+        // Purchase completed successfully
+        return true;
+    }
+
+    // Method to display a receipt for the purchased items
+    static void displayReceipt(List<Item> shoppingCart) {
+        // Check if the shopping cart is empty
+        if (shoppingCart.isEmpty()) {
+            System.out.println("Shopping cart is empty. No receipt available.");
+            return;
+        }
+
+        // Display a detailed receipt for each item
+        double totalPrice = 0.0;
+        System.out.println("\n---Receipt:---");
+        for (Item item : shoppingCart) {
+            int quantity = item.getQuantity();
+            double individualPrice = item.getPrice();
+            double itemTotalPrice = quantity * individualPrice;
+
+            totalPrice += itemTotalPrice;
+
+            System.out.println("Item: " + item.getItemname() +
+                    " | Quantity: " + quantity +
+                    " | Individual Price: $" + individualPrice);
+            System.out.println("\nTotal Price: $" + totalPrice);
+        }
+    }
+
 }
+
+
