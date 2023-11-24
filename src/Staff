@@ -1,0 +1,70 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class Staff {
+
+    public static List<Item> initializeInventory() {
+        List<Item> inventory = new ArrayList<>();
+
+        Item shirt = new Item(5, true, 50.00, "shirt");
+        Item pants = new Item(5, true, 50.00, "pants");
+        Item shoes = new Item(5, true, 50.00, "shoes");
+        Item hat = new Item(5, true, 50.00, "hat");
+        Item jacket = new Item(5, true, 50.00, "jacket");
+
+        inventory.add(shirt);
+        inventory.add(pants);
+        inventory.add(shoes);
+        inventory.add(hat);
+        inventory.add(jacket);
+
+        return inventory;
+    }
+    // Refill inventory of items
+    private static final Scanner scanner = new Scanner(System.in);
+    public static void refillInventory(List<Item> inventory) {
+        System.out.println("===== Refill Inventory =====");
+
+        for (Item item : inventory) {
+            System.out.println("Item: " + item.getItemname());
+            System.out.print("Enter the new quantity for the item: ");
+            int newQuantity = scanner.nextInt();
+            item.setQuantity(newQuantity);
+            item.setInStock(newQuantity > 0); // Set isInStock based on the new quantity
+        }
+
+        System.out.println("Inventory refilled successfully.");
+    }
+
+    // Add new items to the shopping mall
+    public static void addNewItem(List<Item> inventory, String itemName, double price) {
+        System.out.print("Enter the quantity for the new item: ");
+        int quantity = scanner.nextInt();
+
+        Item newItem = new Item(quantity, true, price, itemName);
+        inventory.add(newItem);
+        System.out.println("New item added successfully: " + itemName);
+    }
+
+    // Remove items from the shopping mall
+    public static void removeItem(List<Item> inventory, String itemName) {
+        inventory.removeIf(item -> item.getItemname().equals(itemName));
+        System.out.println("Item removed successfully: " + itemName);
+    }
+
+    // Modify item information (name, price, quantity)
+    public static void modifyItemInfo(List<Item> inventory, String itemName, String newName, double newPrice, int newQuantity) {
+        for (Item item : inventory) {
+            if (item.getItemname().equals(itemName)) {
+                // Modify item information
+                item.setItemName(newName);
+                item.setPrice(newPrice);
+                item.setQuantity(newQuantity);
+                System.out.println("Item information modified successfully: " + itemName);
+                return;
+            }
+        }
+        System.out.println("Item not found: " + itemName);
+    }
+}
