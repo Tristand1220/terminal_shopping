@@ -80,11 +80,11 @@ public class Item {
     }*/
 
     public void printItemDetails() {
-        System.out.println("Item: " + itemname + " Price: " + price);
+        System.out.println("Item: " + itemname + " Price: $" + price);
     }
 
     public void printItemDetailsCart() {
-        System.out.println("Item: " + itemname + " Price: " + price + "Quantity: " + quantity);
+        System.out.println("Item: " + itemname + " Price: $" + price + " Quantity: " + quantity);
     }
 
     public static void displayShoppingCart(List<Item> shoppingCart) {
